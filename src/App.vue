@@ -1,28 +1,67 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <nav>
+      <div class="nav-wrapper blue darken-1">
+        <a href="#" class="brand-logo center">Pessoa</a>
+      </div>
+    </nav>
+    <div class="container">
+      <form>
+          <label>Nome</label>
+          <input type="text" placeholder="Nome">
+          <label>Setor</label>
+          <input type="number" placeholder="Setor">
+          <label>Cargo</label>
+          <input type="text" placeholder="Cargo">
+          <button class="waves-effect waves-light btn-small">Salvar<i class="material-icons left">save</i></button>
+      </form>
+      <table>
+        <thead>
+          <tr>
+            <th>NOME</th>
+            <th>SETOR</th>
+            <th>CARGO</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="pessoa of lista_pessoas" :key="pessoa.id">
+            <td>{{pessoa.nome}}</td>
+            <td>{{pessoa.setor}}</td>
+            <td>{{pessoa.cargo}}</td>
+            <td>
+              <button class="waves-effect btn-small blue darken-1"><i class="material-icons">create</i></button>
+              <button class="waves-effect btn-small red darken-1"><i class="material-icons">delete_sweep</i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
+import Pessoa from './services/pessoa'
+
+export default{
+
+  data(){
+    return {
+      lista_pessoas: []
+    }
+  },
+
+  mounted(){
+    // console.log("")
+    Pessoa.listar().then(resposta => {
+      
+      this.lista_pessoas = resposta;
+    })
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
