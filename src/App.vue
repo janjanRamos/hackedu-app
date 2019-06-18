@@ -6,14 +6,20 @@
       </div>
     </nav>
     <div class="container">
-      <form>
+      
+      <mensagem ref="root"/>
+
+      <form @submit.prevent="salvar">
           <label>Nome</label>
-          <input type="text" placeholder="Nome">
+          <input type="text" placeholder="Nome" v-model="pessoa.nome">
           <label>Setor</label>
-          <input type="number" placeholder="Setor">
+          <input type="text" placeholder="Setor" v-model="pessoa.setor">
           <label>Cargo</label>
-          <input type="text" placeholder="Cargo">
-          <button class="waves-effect waves-light btn-small">Salvar<i class="material-icons left">save</i></button>
+          <input type="text" placeholder="Cargo" v-model="pessoa.cargo">
+          <button class="waves-effect waves-light btn-small" >
+              Salvar
+              <i class="material-icons left">save</i>
+          </button>
       </form>
       <table>
         <thead>
@@ -43,21 +49,45 @@
 <script>
 
 import Pessoa from './services/pessoa'
+import mensagem from './components/mensagem.vue'
 
 export default{
-
+  components:{
+    'mensagem': mensagem
+  },
   data(){
     return {
+      pessoa:{
+        nome: '',
+        setor: '',
+        cargo: ''
+      },
       lista_pessoas: []
     }
   },
-
   mounted(){
-    // console.log("")
-    Pessoa.listar().then(resposta => {
-      
-      this.lista_pessoas = resposta;
-    })
+    this.$refs.root.limpar()
+    this.listar()
+  },
+
+  methods:{
+    /* eslint-disable no-console */
+    listar(){
+        Pessoa.listar()
+        .then(resposta => {
+          this.lista_pessoas = resposta.data
+        }).catch(erro => {
+          this.$refs.root.addErro(erro.message)
+        })
+    },
+    salvar(){
+      Pessoa.salvar(this.pessoa)
+      .then(resposta => {
+        this.$refs.root.addSucess('Pessoa salva com sucesso!')
+      }).catch(erro => {
+        this.$refs.root.addErro(erro.message)
+      })
+    }
   }
 }
 </script>
