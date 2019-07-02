@@ -16,8 +16,18 @@ export default {
     }
   },
   methods:{
-    addErro(msg) {
-      this.lista_mensagens = [{tipo: ERRO, texto: msg}]
+    /* eslint-disable */
+    addErro(erro) {
+      if(erro.response 
+          && erro.response.data 
+          && erro.response.data.message
+          && erro.response.status == 400){
+        this.lista_mensagens = [{tipo: ERRO, texto: erro.response.data.message}]
+      }else if(erro.message){
+        this.lista_mensagens = [{tipo: ERRO, texto: erro.message}]
+      }else{
+        this.lista_mensagens = [{tipo: ERRO, texto: erro}]
+      }
     },
     addInfo(msg) {
       this.lista_mensagens = [{tipo: INFO, texto: msg}]
