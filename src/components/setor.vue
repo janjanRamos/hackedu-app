@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav>
-      <div class="nav-wrapper blue darken-1">
+      <div class="nav-wrapper white darken-1">
         <span class="brand-logo center">Setor</span>
       </div>
     </nav>
@@ -50,6 +50,7 @@
             </td>
             <td style="text-align: right">
               <button @click="editar(setor)" class="waves-effect btn-small blue darken-1"><i class="material-icons">create</i></button>
+              &nbsp;
               <button @click="remover(setor)" class="waves-effect btn-small red darken-1"><i class="material-icons">delete_sweep</i></button>
             </td>
           </tr>
@@ -69,12 +70,8 @@
 
 import Setor from '@/services/setor'
 import Pessoa from '@/services/pessoa'
-import mensagem from '@/components/mensagem.vue'
 
 export default{
-  components:{
-    'mensagem': mensagem
-  },
   data(){
     return {
       setor:{
@@ -110,31 +107,27 @@ export default{
     },
     salvar(){
       this.setor.gestor.id = this.gestor_selecionado.id
-
-      let alteracao = this.setor.id
-      if(alteracao){
-        Setor.atualizar(this.setor)
-        .then(resposta => {
-          this.limpar()
-          this.$refs.msg.addSucess('Setor salvo com sucesso!')
-          this.listar()
-        }).catch(erro => {
-          this.$refs.msg.addErro(erro)
-        })        
-      }else{
-        Setor.salvar(this.setor)
-        .then(resposta => {
-          this.limpar()
-          this.$refs.msg.addSucess('Setor salvo com sucesso!')
-          this.listar()
-        }).catch(erro => {
-          this.$refs.msg.addErro(erro)
-        })        
-      }
+      Setor.salvar(this.setor)
+      .then(resposta => {
+        this.limpar()
+        this.$refs.msg.addSucess('Setor salvo com sucesso!')
+        this.listar()
+      }).catch(erro => {
+        this.$refs.msg.addErro(erro)
+      })        
     },
     editar(setor){
       this.setor = setor
-      gestor_selecionado = ''
+      if(setor.gestor){
+        this.gestor_selecionado = {
+          'id': setor.gestor.id,
+          'nome': setor.gestor.nome,
+          'toLowerCase': () => setor.gestor.nome.toLowerCase(),
+          'toString': () => setor.gestor.nome
+        }
+      }else{
+        this.gestor_selecionado = ''
+      }
     },
     remover(setor){
       if(confirm('Deseja excluir o setor?')){

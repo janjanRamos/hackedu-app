@@ -13,6 +13,9 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 Vue.use(VueMaterial)
 
+import mensagem from '@/components/mensagem.vue'
+Vue.component('mensagem', mensagem, {lista_mensagens: []})
+
 Vue.config.productionTip = false
 new Vue({
   router: router, 

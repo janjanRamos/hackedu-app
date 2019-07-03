@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav>
-      <div class="nav-wrapper blue darken-1">
+      <div class="nav-wrapper white darken-1">
         <span class="brand-logo center">Pessoa</span>
       </div>
     </nav>
@@ -48,6 +48,7 @@
             
             <td style="text-align: right">
               <button @click="editar(pessoa)" class="waves-effect btn-small blue darken-1"><i class="material-icons">create</i></button>
+              &nbsp;
               <button @click="remover(pessoa)" class="waves-effect btn-small red darken-1"><i class="material-icons">delete_sweep</i></button>
             </td>
           </tr>
@@ -66,12 +67,8 @@
 
 import Setor from '@/services/setor'
 import Pessoa from '@/services/pessoa'
-import mensagem from '@/components/mensagem.vue'
 
 export default{
-  components:{
-    'mensagem': mensagem
-  },
   data(){
     return {
       pessoa:{
@@ -108,31 +105,27 @@ export default{
     },
     salvar(){
       this.pessoa.setor.id = this.setor_selecionado.id
-
-      let alteracao = this.pessoa.id
-      if(alteracao){
-        Pessoa.atualizar(this.pessoa)
+      Pessoa.salvar(this.pessoa)
         .then(resposta => {
-          this.limpar()
-          this.$refs.msg.addSucess('Pessoa salva com sucesso!')
-          this.listar()
-        }).catch(erro => {
-          this.$refs.msg.addErro(erro)
-        })        
-      }else{
-        Pessoa.salvar(this.pessoa)
-        .then(resposta => {
-          this.limpar()
-          this.$refs.msg.addSucess('Pessoa salva com sucesso!')
-          this.listar()
-        }).catch(erro => {
-          this.$refs.msg.addErro(erro)
-        })        
-      }
+        this.limpar()
+        this.$refs.msg.addSucess('Pessoa salva com sucesso!')
+        this.listar()
+      }).catch(erro => {
+        this.$refs.msg.addErro(erro)
+      })         
     },
     editar(pessoa){
       this.pessoa = pessoa
-      setor_selecionado = ''
+      if(pessoa.setor){
+        this.setor_selecionado = {
+          'id': pessoa.setor.id,
+          'nome': pessoa.setor.nome,
+          'toLowerCase': () => pessoa.setor.nome.toLowerCase(),
+          'toString': () => pessoa.setor.nome
+        }
+      }else{
+        this.setor_selecionado = ''
+      }
     },
     remover(pessoa){
       if(confirm('Deseja excluir a pessoa?')){

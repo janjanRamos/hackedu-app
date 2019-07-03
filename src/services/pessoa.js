@@ -9,10 +9,12 @@ export default{
         })
     },
     salvar:(pessoa) => {
-        return http.post('pessoa', pessoa)
-    },
-    atualizar:(pessoa) => {
-        return http.put('pessoa/'+ pessoa.id, pessoa)
+        let alteracao = pessoa.id
+        if(alteracao){
+            return http.put('pessoa/'+ pessoa.id, pessoa)
+        }else{
+            return http.post('pessoa', pessoa)
+        }
     },
     remover:(pessoa) => {
         return http.delete('pessoa/'+ pessoa.id)

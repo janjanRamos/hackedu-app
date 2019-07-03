@@ -1,9 +1,19 @@
 <template>
-  <ul>
+  <!-- <ul>
     <li v-for="(msg, index) of lista_mensagens" :key="index">
       <span v-bind:class="msg.tipo">{{msg.texto}}</span>
     </li>
-  </ul>
+  </ul> -->
+  <div>
+    <div v-for="(msg, index) of lista_mensagens" :key="index"
+        class="div-mensagem" v-bind:class="msg.tipo" >
+      <ul>
+        <li>
+          <span>{{msg.texto}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -47,15 +57,26 @@ export default {
 
 <style>
 .erro{
-  color: red
+  border-color: red;
+  color: red;
 }
 .info{
-  color: black
+  border-color: black;
+  color: black;
 }
 .warn{
-  color: yellow
+  border-color: yellow;
+  color: yellow;
 }
 .sucess{
-  color: green
+  border-color: green;
+  color: green;
+}
+.div-mensagem{
+  padding-top: 15px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px dotted;
+  font-size: 15px !important;
 }
 </style>
