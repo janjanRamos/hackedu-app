@@ -9,7 +9,7 @@
         class="div-mensagem" v-bind:class="msg.tipo" >
       <ul>
         <li>
-          <span>{{msg.texto}}</span>
+          <span style="white-space: pre-line;">{{msg.texto}}</span>
         </li>
       </ul>
     </div>

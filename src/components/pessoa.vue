@@ -12,6 +12,7 @@
       <form @submit.prevent="salvar">
           <label>Nome</label>
           <input type="text" placeholder="Nome" v-model="pessoa.nome">
+          
           <md-autocomplete v-model="setor_selecionado" :md-options="autocomplete_setor" >
             <label>Setor</label>
             <template slot="md-autocomplete-item" slot-scope="{ item }">
@@ -21,9 +22,17 @@
               <i> Nenhum resultado encontrado</i> 
             </template>
           </md-autocomplete>
-          <label>Cargo</label>
-          <input type="text" placeholder="Cargo" v-model="pessoa.cargo">
-          
+
+          <md-autocomplete v-model="cargo_selecionado" :md-options="autocomplete_cargo" >
+            <label>Cargo</label>
+            <template slot="md-autocomplete-item" slot-scope="{ item }">
+              {{ item.nome }}
+            </template>
+            <template slot="md-autocomplete-empty"> 
+              <i> Nenhum resultado encontrado</i> 
+            </template>
+          </md-autocomplete>
+
           <div style="text-align: right">
             <button class="waves-effect waves-light btn-small" >
                 Salvar
@@ -44,7 +53,7 @@
           <tr v-for="pessoa of lista_pessoas" :key="pessoa.id">
             <td>{{pessoa.nome}}</td>
             <td>{{pessoa.setor.nome}}</td>
-            <td>{{pessoa.cargo}}</td>
+            <td>{{pessoa.cargo.nome}}</td>
             
             <td style="text-align: right">
               <button @click="editar(pessoa)" class="waves-effect btn-small blue darken-1"><i class="material-icons">create</i></button>
@@ -64,7 +73,7 @@
 </template>
 
 <script>
-
+import Cargo from '@/services/cargo'
 import Setor from '@/services/setor'
 import Pessoa from '@/services/pessoa'
 
@@ -76,15 +85,20 @@ export default{
         setor: {
           id: 0
         },
-        cargo: ''
+        cargo: {
+          id: 0
+        }
       },
       lista_pessoas: [],
       setor_selecionado: '',
-      autocomplete_setor: []
+      autocomplete_setor: [],
+      cargo_selecionado: '',
+      autocomplete_cargo: []
     }
   },
   mounted(){
     this.carregarAutocompleteSetor()
+    this.carregarAutocompleteCargo()
     this.listar()
   },
 
@@ -93,6 +107,7 @@ export default{
     limpar(){
       this.pessoa = {}
       this.setor_selecionado = ''
+      this.cargo_selecionado = ''
       this.$refs.msg.limpar()
     },
     listar(){
@@ -105,6 +120,7 @@ export default{
     },
     salvar(){
       this.pessoa.setor.id = this.setor_selecionado.id
+      this.pessoa.cargo.id = this.cargo_selecionado.id
       Pessoa.salvar(this.pessoa)
         .then(resposta => {
         this.limpar()
@@ -125,6 +141,17 @@ export default{
         }
       }else{
         this.setor_selecionado = ''
+      }
+
+      if(pessoa.cargo){
+        this.cargo_selecionado = {
+          'id': pessoa.cargo.id,
+          'nome': pessoa.cargo.nome,
+          'toLowerCase': () => pessoa.cargo.nome.toLowerCase(),
+          'toString': () => pessoa.cargo.nome
+        }
+      }else{
+        this.cargo_selecionado = ''
       }
     },
     remover(pessoa){
@@ -150,13 +177,27 @@ export default{
       }).catch(erro => {
         this.$refs.msg.addErro("Erro ao carregar a lista de setores.")
       })
+    },
+    carregarAutocompleteCargo(){
+      Cargo.listar()
+      .then(resposta => {
+        this.autocomplete_cargo
+          = resposta.data.map(cargo => ({
+            'id': cargo.id,
+            'nome': cargo.nome,
+            'toLowerCase': () => cargo.nome.toLowerCase(),
+            'toString': () => cargo.nome
+          }))
+      }).catch(erro => {
+        this.$refs.msg.addErro("Erro ao carregar a lista de cargos.")
+      })
     }
   }
 }
 </script>
 
 <style>
-.md-menu-content {
-  z-index: 10;
+md-autocomplete {
+  z-index: 10000;
 }
 </style>
