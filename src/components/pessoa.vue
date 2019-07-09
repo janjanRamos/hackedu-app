@@ -10,11 +10,13 @@
       <mensagem ref="msg"/>
 
       <form @submit.prevent="salvar">
-          <label>Nome</label>
-          <input type="text" placeholder="Nome" v-model="pessoa.nome">
+          <md-field>
+            <label>Nome</label>
+            <md-input type="text" v-model="pessoa.nome" required/>
+          </md-field>
           
           <md-autocomplete v-model="setor_selecionado" :md-options="autocomplete_setor" >
-            <label>Setor</label>
+            <label>Setor *</label>
             <template slot="md-autocomplete-item" slot-scope="{ item }">
               {{ item.nome }}
             </template>
@@ -24,7 +26,7 @@
           </md-autocomplete>
 
           <md-autocomplete v-model="cargo_selecionado" :md-options="autocomplete_cargo" >
-            <label>Cargo</label>
+            <label>Cargo *</label>
             <template slot="md-autocomplete-item" slot-scope="{ item }">
               {{ item.nome }}
             </template>
@@ -73,9 +75,8 @@
 </template>
 
 <script>
-import Cargo from '@/services/cargo'
-import Setor from '@/services/setor'
 import Pessoa from '@/services/pessoa'
+import AutocompleteHelper from '@/services/autocompleteHelper'
 
 export default{
   data(){
@@ -97,8 +98,8 @@ export default{
     }
   },
   mounted(){
-    this.carregarAutocompleteSetor()
-    this.carregarAutocompleteCargo()
+    this.autocomplete_setor = AutocompleteHelper.carregarAutocompleteSetor()
+    this.autocomplete_cargo = AutocompleteHelper.carregarAutocompleteCargo()
     this.listar()
   },
 
@@ -132,27 +133,8 @@ export default{
     },
     editar(pessoa){
       this.pessoa = pessoa
-      if(pessoa.setor){
-        this.setor_selecionado = {
-          'id': pessoa.setor.id,
-          'nome': pessoa.setor.nome,
-          'toLowerCase': () => pessoa.setor.nome.toLowerCase(),
-          'toString': () => pessoa.setor.nome
-        }
-      }else{
-        this.setor_selecionado = ''
-      }
-
-      if(pessoa.cargo){
-        this.cargo_selecionado = {
-          'id': pessoa.cargo.id,
-          'nome': pessoa.cargo.nome,
-          'toLowerCase': () => pessoa.cargo.nome.toLowerCase(),
-          'toString': () => pessoa.cargo.nome
-        }
-      }else{
-        this.cargo_selecionado = ''
-      }
+      this.setor_selecionado = AutocompleteHelper.selecionarSetor(pessoa.setor)
+      this.cargo_selecionado = AutocompleteHelper.selecionarCargo(pessoa.cargo)
     },
     remover(pessoa){
       if(confirm('Deseja excluir a pessoa?')){
@@ -163,34 +145,6 @@ export default{
           this.$refs.msg.addErro(erro)
         }) 
       }
-    },
-    carregarAutocompleteSetor(){
-      Setor.listar()
-      .then(resposta => {
-        this.autocomplete_setor
-          = resposta.data.map(setor => ({
-            'id': setor.id,
-            'nome': setor.nome,
-            'toLowerCase': () => setor.nome.toLowerCase(),
-            'toString': () => setor.nome
-          }))
-      }).catch(erro => {
-        this.$refs.msg.addErro("Erro ao carregar a lista de setores.")
-      })
-    },
-    carregarAutocompleteCargo(){
-      Cargo.listar()
-      .then(resposta => {
-        this.autocomplete_cargo
-          = resposta.data.map(cargo => ({
-            'id': cargo.id,
-            'nome': cargo.nome,
-            'toLowerCase': () => cargo.nome.toLowerCase(),
-            'toString': () => cargo.nome
-          }))
-      }).catch(erro => {
-        this.$refs.msg.addErro("Erro ao carregar a lista de cargos.")
-      })
     }
   }
 }

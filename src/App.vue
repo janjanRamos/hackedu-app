@@ -15,10 +15,16 @@
         <router-link to="/cargo">Cargo</router-link>
       </vs-navbar-item>
       <vs-navbar-item index="2">
-        <router-link to="/setor">Setor</router-link>
+        <router-link to="/tag">Tag</router-link>
       </vs-navbar-item>
       <vs-navbar-item index="3">
+        <router-link to="/setor">Setor</router-link>
+      </vs-navbar-item>
+      <vs-navbar-item index="4">
         <router-link to="/pessoa">Pessoa</router-link>
+      </vs-navbar-item>
+      <vs-navbar-item index="5">
+        <router-link to="/configuracaopdi">Configurar Pdi</router-link>
       </vs-navbar-item>
       <vs-spacer></vs-spacer>
     </vs-navbar>

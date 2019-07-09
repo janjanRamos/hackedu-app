@@ -10,8 +10,10 @@
       <mensagem ref="msg"/>
 
       <form @submit.prevent="salvar">
-          <label>Nome</label>
-          <input type="text" placeholder="Nome" v-model="cargo.nome">
+          <md-field>
+            <label>Nome</label>
+            <md-input type="text" v-model="cargo.nome" required/>
+          </md-field>
 
           <div style="text-align: right">
             <button class="waves-effect waves-light btn-small" >
