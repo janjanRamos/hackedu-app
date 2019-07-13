@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vs-navbar v-model="activeItem" class="nabarx">
+    <vs-navbar v-model="activeItem" class="menu">
       <div slot="title">
         <vs-navbar-title>
           EVOLUA
@@ -24,7 +24,10 @@
         <router-link to="/pessoa">Pessoa</router-link>
       </vs-navbar-item>
       <vs-navbar-item index="5">
-        <router-link to="/configuracaopdi">Configurar Pdi</router-link>
+        <router-link to="/configuracaopdi">Configurar PDI</router-link>
+      </vs-navbar-item>
+      <vs-navbar-item index="6">
+        <router-link to="/pdi">PDI</router-link>
       </vs-navbar-item>
       <vs-spacer></vs-spacer>
     </vs-navbar>
@@ -44,7 +47,8 @@ export default {
 .logo{
   height: 35px !important;
 }
-.nabarx{
+.menu{
+  height: 70px; 
   background-color: #1E88E5 !important;
   color: white !important;
   -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.2) !important;
@@ -52,16 +56,31 @@ export default {
   padding: 0 50px !important;
 }
 .vs-navbar--item a{
-  font-size: 1.2rem !important;
+  font-size: 1.1rem !important;
   color: white !important;
 }
 .vs-navbar--title{
   font-size: 2.0rem !important;
 }
-.brand-logo{
-  color: black !important;
+.container{
+  margin-top: 15px;
+  padding: 10px 100px;
 }
-nav{
-  margin-bottom: 15px;
+body{
+  background-color:white; 
+}
+.page-title {
+  flex: 1 1 auto;
+  text-align: center;
+  font-size: 1.4rem !important;
+}
+.right{
+  text-align: right;
+}
+.md-toolbar-section-start{
+  margin-left: -25px;
+}
+.md-button-content{
+  display: contents !important;
 }
 </style>

@@ -1,17 +1,8 @@
 <template>
-  <!-- <ul>
-    <li v-for="(msg, index) of lista_mensagens" :key="index">
-      <span v-bind:class="msg.tipo">{{msg.texto}}</span>
-    </li>
-  </ul> -->
   <div>
     <div v-for="(msg, index) of lista_mensagens" :key="index"
         class="div-mensagem" v-bind:class="msg.tipo" >
-      <ul>
-        <li>
-          <span style="white-space: pre-line;">{{msg.texto}}</span>
-        </li>
-      </ul>
+      <span style="white-space: pre-line;">{{msg.texto}}</span>
     </div>
   </div>
 </template>

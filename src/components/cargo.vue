@@ -1,53 +1,53 @@
 <template>
-  <div id="app">
-    <nav>
-      <div class="nav-wrapper white darken-1">
-        <span class="brand-logo center">Cargo</span>
-      </div>
-    </nav>
+  <div >
+    <md-toolbar class="md-dense">
+      <h3 class="md-title page-title">
+        Cargo
+      </h3>
+    </md-toolbar>
     <div class="container">
-      
       <mensagem ref="msg"/>
 
-      <form @submit.prevent="salvar">
+      <form>
           <md-field>
             <label>Nome</label>
             <md-input type="text" v-model="cargo.nome" required/>
           </md-field>
 
-          <div style="text-align: right">
-            <button class="waves-effect waves-light btn-small" >
-                Salvar
-                <i class="material-icons left">save</i>
-            </button>
+          <div class="right">
+            <md-button class="md-raised md-primary" @click="salvar()">
+                <i class="material-icons">save</i>&nbsp;
+                <span>Salvar</span>
+            </md-button>
           </div>
       </form>
 
-      <table>
-        <thead>
-          <tr>
-            <th>NOME</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="cargo of lista_cargos" :key="cargo.id">
-            <td>
-              {{cargo.nome}}
-            </td>
-            <td style="text-align: right">
-              <button @click="editar(cargo)" class="waves-effect btn-small blue darken-1"><i class="material-icons">create</i></button>
-              &nbsp;
-              <button @click="remover(cargo)" class="waves-effect btn-small red darken-1"><i class="material-icons">delete_sweep</i></button>
-            </td>
-          </tr>
-          <tr v-if="!lista_cargos.length">
-            <td colspan="3">
-              <i>Nenhum resultado encontrado.</i>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <md-table v-model="lista_cargos">
+        <md-table-toolbar>
+          <div class="md-toolbar-section-start">
+            <h1 class="md-title">Lista de Cargos</h1>
+          </div>
+        </md-table-toolbar>
+
+        <md-table-empty-state>
+          <i>Nenhum resultado encontrado.</i>
+        </md-table-empty-state>
+
+        <md-table-row slot="md-table-row" slot-scope="{ item }">
+          <md-table-cell md-label="NOME">{{item.nome}}</md-table-cell>
+          <md-table-cell class="right">
+            <md-button class="md-icon-button md-raised md-primary " @click="editar(item)">
+              <i class="material-icons">create</i>
+              <md-tooltip md-direction="right">Editar</md-tooltip>
+            </md-button>
+            &nbsp;
+            <md-button class="md-icon-button md-raised md-accent" @click="remover(item)">
+              <i class="material-icons">delete</i>
+              <md-tooltip md-direction="right">Remover</md-tooltip>
+            </md-button>
+          </md-table-cell>
+        </md-table-row>
+      </md-table>
 
     </div>
   </div>

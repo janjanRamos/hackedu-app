@@ -1,8 +1,9 @@
 <template>
   <div class="container-home">
-
-    <h5>Seja bem vindo!</h5>
-    <h4>Registre e acompanhe o seu PDI.</h4>
+    <br/>
+    <h2>Seja bem vindo!</h2>
+    <br/>
+    <h1>Registre e acompanhe o seu PDI.</h1>
     
   </div>
 </template>

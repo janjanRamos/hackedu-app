@@ -4,7 +4,7 @@ import Pessoa from '@/components/pessoa.vue'
 import Home from '@/components/home.vue'
 import Cargo from '@/components/cargo.vue'
 import Tag from '@/components/tag.vue'
-// import Pdi from '@/components/pdi.vue'
+import Pdi from '@/components/pdi.vue'
 import ConfiguracaoPdi from '@/components/configuracaoPdi.vue';
 
 export default new VueRouter({
@@ -33,10 +33,10 @@ export default new VueRouter({
       path: '/configuracaopdi',
       component: ConfiguracaoPdi
     }
-    // ,
-    // {
-    //   path: '/pdi',
-    //   component: Pdi
-    // }
+    ,
+    {
+      path: '/pdi',
+      component: Pdi
+    }
   ]
 })
