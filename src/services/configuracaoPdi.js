@@ -16,6 +16,9 @@ export default{
             return http.post('configuracaoPdi', configuracaoPdi)
         }
     },
+    inativar:(configuracaoPdi) => {
+        return http.put('configuracaoPdi/inativar/'+ configuracaoPdi.id, configuracaoPdi)
+    },
     remover:(configuracaoPdi) => {
         return http.delete('configuracaoPdi/'+ configuracaoPdi.id)
     }

@@ -16,6 +16,9 @@ export default{
             return http.post('pdi', pdi)
         }
     },
+    inativar:(pdi) => {
+        return http.put('pdi/inativar/'+ pdi.id, pdi)
+    },
     remover:(pdi) => {
         return http.delete('pdi/'+ pdi.id)
     }

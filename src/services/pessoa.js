@@ -16,6 +16,9 @@ export default{
             return http.post('pessoa', pessoa)
         }
     },
+    inativar:(pessoa) => {
+        return http.put('pessoa/inativar/'+ pessoa.id, pessoa)
+    },
     remover:(pessoa) => {
         return http.delete('pessoa/'+ pessoa.id)
     }

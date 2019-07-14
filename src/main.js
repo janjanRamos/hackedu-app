@@ -16,6 +16,20 @@ Vue.use(VueMaterial)
 import mensagem from '@/components/mensagem.vue'
 Vue.component('mensagem', mensagem, {lista_mensagens: []})
 
+import moment from 'moment'
+Vue.filter('formatDateTime', function(value) {
+  if (value) {
+    return moment(String(value)).format('DD/MM/YYYY hh:mm')
+  }
+})
+Vue.filter('formatDate', function(value) {
+  if (value) {
+    return moment(String(value)).format('DD/MM/YYYY')
+  }
+})
+
+Vue.material.locale.dateFormat = 'dd/MM/yyyy'
+
 Vue.config.productionTip = false
 new Vue({
   router: router, 

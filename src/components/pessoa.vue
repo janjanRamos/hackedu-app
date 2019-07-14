@@ -34,6 +34,8 @@
             </template>
           </md-autocomplete>
 
+          <md-switch v-model="pessoa.gestor">{{ pessoa.gestor ? 'Sim' : 'Não' }}</md-switch>
+
           <div class="right">
             <md-button class="md-raised md-primary" @click="salvar()">
                 <i class="material-icons">save</i>&nbsp;
@@ -57,6 +59,7 @@
           <md-table-cell md-label="NOME">{{item.nome}}</md-table-cell>
           <md-table-cell md-label="SETOR">{{item.setor.nome}}</md-table-cell>
           <md-table-cell md-label="CARGO">{{item.cargo.nome}}</md-table-cell>
+          <md-table-cell md-label="GESTOR?">{{item.gestor ? 'Sim' : 'Não'}}</md-table-cell>
           <md-table-cell class="right">
             <md-button class="md-icon-button md-raised md-primary " @click="editar(item)">
               <i class="material-icons">create</i>
@@ -89,7 +92,8 @@ export default{
         },
         cargo: {
           id: 0
-        }
+        },
+        gestor: false
       },
       lista_pessoas: [],
       setor_selecionado: '',

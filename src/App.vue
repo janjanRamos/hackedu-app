@@ -83,4 +83,7 @@ body{
 .md-button-content{
   display: contents !important;
 }
+.md-empty-state{
+  padding: 10px !important;
+}
 </style>

@@ -16,6 +16,9 @@ export default{
             return http.post('cargo', cargo)
         }
     },
+    inativar:(cargo) => {
+        return http.put('cargo/inativar/'+ cargo.id, cargo)
+    },
     remover:(cargo) => {
         return http.delete('cargo/'+ cargo.id)
     }

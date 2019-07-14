@@ -33,10 +33,10 @@
                 <md-input type="text" v-model="item_adicionado.descricao" required/>
               </md-field>
               <div style="display:flex">
-                <md-datepicker v-model="item_adicionado.data_prevista">
+                <md-datepicker v-model="item_adicionado.dataPrevista" md-immediately>
                   <label>Data Prevista *</label>
                 </md-datepicker>
-                <md-datepicker v-model="item_adicionado.data_realizacao" md-primary>
+                <md-datepicker v-model="item_adicionado.dataRealizacao" md-immediately>
                   <label>Data de Realização</label>
                 </md-datepicker>
               </div>
@@ -60,15 +60,15 @@
 
                 <md-table-row slot="md-table-row" slot-scope="{ item }">
                   <md-table-cell md-label="DESCRIÇÃO">{{item.descricao}}</md-table-cell>
-                  <md-table-cell md-label="DATA PREVISTA">{{item.data_prevista}}</md-table-cell>
-                  <md-table-cell md-label="DATA DE REALIZAÇÃO">{{item.data_realizacao}}</md-table-cell>
+                  <md-table-cell md-label="DATA PREVISTA" md-date>{{item.dataPrevista | formatDate}}</md-table-cell>
+                  <md-table-cell md-label="DATA DE REALIZAÇÃO">{{item.dataRealizacao | formatDate}}</md-table-cell>
                   <md-table-cell class="right">
-                    <md-button class="md-icon-button md-raised md-primary " @click="editar(item)">
+                    <md-button class="md-icon-button md-raised md-primary " @click="editarItem(item)">
                       <i class="material-icons">create</i>
                       <md-tooltip md-direction="right">Editar</md-tooltip>
                     </md-button>
                     &nbsp;
-                    <md-button class="md-icon-button md-raised md-accent" @click="remover(item)">
+                    <md-button class="md-icon-button md-raised md-accent" @click="removerItem(item)">
                       <i class="material-icons">delete</i>
                       <md-tooltip md-direction="right">Remover</md-tooltip>
                     </md-button>
@@ -86,6 +86,7 @@
             </md-button>
           </div>
       </form>
+      <md-divider></md-divider>
 
       <md-table v-model="lista_pdi">
         <md-table-toolbar>
@@ -121,14 +122,14 @@
 
 <script>
 
-import ConfiguracaoPdi from '@/services/pdi'
+import PDI from '@/services/pdi'
 import AutocompleteHelper from '@/services/autocompleteHelper'
 
 export default{
   data(){
     return {
       pdi:{
-        observacao: '',
+        observacoes: '',
         pessoa: {
           id: 0
         },
@@ -140,8 +141,8 @@ export default{
       item_adicionado:{
         id: 0,
         descricao: '',
-        data_prevista: null,
-        data_realizacao:null
+        dataPrevista: null,
+        dataRealizacao:null
       }
     }
   },
@@ -154,12 +155,16 @@ export default{
     /* eslint-disable */
     limpar(){
       this.pessoa_selecionada = ''
-      this.pdi = {}
+      this.pdi = {
+        observacoes: '',
+        pessoa: {id: 0},
+        itens: []
+      }
       this.item_adicionado = {} 
       this.$refs.msg.limpar()
     },
     listar(){
-        ConfiguracaoPdi.listar()
+        PDI.listar()
         .then(resposta => {
           console.log(resposta.data)
           this.lista_pdi = resposta.data
@@ -169,10 +174,10 @@ export default{
     },
     salvar(){
       this.pdi.pessoa.id = this.pessoa_selecionada.id
-      ConfiguracaoPdi.salvar(this.pdi)
+      PDI.salvar(this.pdi)
       .then(resposta => {
         this.limpar()
-        this.$refs.msg.addSucess('Configuração salva com sucesso!')
+        this.$refs.msg.addSucess('PDI salvo com sucesso!')
         this.listar()
       }).catch(erro => {
         this.$refs.msg.addErro(erro)
@@ -184,8 +189,8 @@ export default{
     },
     remover(pdi){
       if(confirm('Deseja excluir o pdi?')){
-        ConfiguracaoPdi.remover(pdi).then(resposta => {
-          this.$refs.msg.addSucess('Configuração removida com sucesso!')
+        PDI.inativar(pdi).then(resposta => {
+          this.$refs.msg.addSucess('PDI removido com sucesso!')
           this.listar()
          }).catch(erro => {
           this.$refs.msg.addErro(erro)
@@ -200,7 +205,8 @@ export default{
       this.pdi.itens.push(this.item_adicionado)
       this.item_adicionado = {}
     },
-    removerItem(index){
+    removerItem(item){
+      let index = this.pdi.itens.indexOf(item)
       if(confirm('Deseja excluir o item?')){
         this.pdi.itens.splice(index)
       }
@@ -213,7 +219,5 @@ export default{
 </script>
 
 <style>
-.md-drawer {
-    background: blue !important;
-}
+
 </style>

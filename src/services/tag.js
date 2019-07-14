@@ -16,6 +16,9 @@ export default{
             return http.post('tag', tag)
         }
     },
+    inativar:(tag) => {
+        return http.put('tag/inativar/'+ tag.id, tag)
+    },
     remover:(tag) => {
         return http.delete('tag/'+ tag.id)
     }

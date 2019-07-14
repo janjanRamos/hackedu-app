@@ -16,6 +16,9 @@ export default{
             return http.post('setor', setor)
         }
     },
+    inativar:(setor) => {
+        return http.put('setor/inativar/'+ setor.id, setor)
+    },
     remover:(setor) => {
         return http.delete('setor/'+ setor.id)
     }
