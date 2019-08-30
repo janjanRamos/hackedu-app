@@ -40,7 +40,9 @@
 
 <script>
     import { mapMutations } from 'vuex'
+    import Usuario from '@/services/usuario.js'
     export default {
+      /* eslint-disable */
       data() {
         return {  
           usuario:{
@@ -53,22 +55,20 @@
           ...mapMutations([
             'setAutenticado'
           ]),
-          /* eslint-disable */
           login() {
-            // this.$emit("autenticar", this.usuario.login)
-            this.setAutenticado(this.usuario.login);
-            this.$router.push("home");
-            // if(this.usuario.login == "" || this.usuario.senha == ""){
-            //   this.$refs.msg.addErro("Usuário e/ou senha inválidos.")
-            // }else{
-            //   Usuario.buscarPorLogin(this.usuario)
-            //   .then(resposta => {
-            //     this.$emit("autenticar", true, this.usuario.login)
-            //     this.$router.replace({ path: "/" })
-            //   }).catch(erro => {
-            //     this.$refs.msg.addErro(erro)
-            //   })
-            // }
+            // this.setAutenticado(this.usuario.login);
+            // this.$router.push("home");
+            if(this.usuario.login == "" || this.usuario.senha == ""){
+              this.$refs.msg.addErro("Usuário e/ou senha inválidos.")
+            }else{
+              Usuario.buscarPorLogin(this.usuario)
+              .then(resposta => {
+                this.setAutenticado(this.usuario.login)
+                this.$router.push("home")
+              }).catch(erro => {
+                this.$refs.msg.addErro(erro)
+              })
+            }
           }
       }
     }

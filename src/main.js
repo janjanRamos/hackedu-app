@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from '@/App.vue'
 
 import VueRouter from 'vue-router'
-import router from '@/router/index.js'
+import router from '@/router.js'
 Vue.use(VueRouter)
 
 import Vuesax from 'vuesax'
@@ -15,6 +15,9 @@ Vue.use(VueMaterial)
 
 import mensagem from '@/components/mensagem.vue'
 Vue.component('mensagem', mensagem, {lista_mensagens: []})
+
+import inputcpf from '@/components/inputcpf.vue'
+Vue.component('inputcpf', inputcpf)
 
 import moment from 'moment'
 Vue.filter('formatDateTime', function(value) {
@@ -36,7 +39,7 @@ Vue.config.productionTip = false
 
 import Vuex from 'vuex'
 Vue.use(Vuex)
-import store from '@/store/index.js'
+import store from '@/store.js'
 
 new Vue({
   store,

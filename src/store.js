@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
-import router from '@/router/index.js'
+import router from '@/router.js'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({    

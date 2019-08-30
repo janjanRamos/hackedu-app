@@ -14,10 +14,7 @@
             <md-input type="text" v-model="usuario.pessoa.nome" required/>
           </md-field>
 
-          <md-field :class="classInputCpf">
-            <label>CPF</label>
-            <input-mask mask="999.999.999-99" v-model="usuario.pessoa.cpf" class="md-input" @focus="focarInputCpf" @blur="desfocarInputCpf"/>
-          </md-field>
+          <inputcpf v-model="usuario.pessoa.cpf" ref="inputcpf"/>
           
           <md-field>
             <label>Email</label>
@@ -64,8 +61,7 @@
               cpf: "",
               email: ""
             }
-          },
-          classInputCpf: "md-required"
+          }
         }
       },
       methods: {
@@ -74,19 +70,11 @@
             Usuario.salvar(this.usuario)
             .then(resposta => {
               this.usuario = {}
+              this.$refs.inputcpf.cpf = ""
               this.$refs.msg.addSucess('Usuário cadastro com sucesso!')
             }).catch(erro => {
               this.$refs.msg.addErro(erro)
             })        
-          },
-          focarInputCpf: function (event){
-            this.classInputCpf = "md-required md-focused"
-          },
-          desfocarInputCpf: function (event){
-            this.classInputCpf = "md-required"
-            if(event.target.value != ""){
-              this.classInputCpf = "md-required md-has-value"
-            }
           }
       }
     }

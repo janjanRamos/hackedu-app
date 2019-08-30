@@ -14,9 +14,11 @@
             <md-input type="text" v-model="pessoa.nome" required/>
           </md-field>
           
+          <inputcpf v-model="pessoa.cpf" ref="inputcpf"/>
+
           <md-field>
-            <label>CPF</label>
-            <md-input type="text" v-model="pessoa.cpf" required/>
+            <label>Email</label>
+            <md-input type="text" v-model="pessoa.email" required/>
           </md-field>
 
           <md-autocomplete v-model="setor_selecionado" :md-options="autocomplete_setor" >
@@ -102,7 +104,8 @@ export default{
           id: 0
         },
         gestor: false,
-        cpf: 0
+        cpf: "",
+        email: ""
       },
       lista_pessoas: [],
       setor_selecionado: '',
@@ -124,6 +127,7 @@ export default{
       this.setor_selecionado = ''
       this.cargo_selecionado = ''
       this.$refs.msg.limpar()
+      this.$refs.inputcpf.cpf = ""
     },
     listar(){
         Pessoa.listar()

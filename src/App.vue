@@ -10,8 +10,8 @@
       </header>
     </div>
     
-    <div class="parentx-static" v-if="autenticado">
-      <vs-sidebar static-position hidden-background parent="body" default-index="1" color="primary" class="sidebarx" spacer v-model="active">
+    <div class="parentx-static" id="divSidebar" v-if="autenticado">
+      <vs-sidebar static-position hidden-background parent="divSidebar" default-index="1" color="primary" class="sidebarx" spacer v-model="active">
         <div class="logo" slot="header">
           <label>EVOLUA</label>
           <img src="./assets/logo_azul.png" />
@@ -49,7 +49,7 @@
             <router-link to="/configuracao">Configurar</router-link>
           </vs-sidebar-item>
           <vs-sidebar-item index="7" icon="assessment">
-            <router-link to="/registrar">Registrar</router-link>
+            <router-link to="/pdi">Registrar</router-link>
           </vs-sidebar-item>
         </vs-sidebar-group>
 
@@ -77,17 +77,12 @@ export default {
       active: false
     }
   },
-  computed: mapState({
-    autenticado: state => state.autenticado,
-    usuarioLogado: state => state.usuarioLogado
-  }),
   mounted() {
     this.logout();
   },
+  computed: mapState(['autenticado','usuarioLogado']),
   methods: {
-    ...mapActions([
-      'logout'
-    ])
+    ...mapActions(['logout'])
   }
 }
 </script>
@@ -102,7 +97,7 @@ export default {
 /* Cabeçalho das páginas privadas*/
 .cabecalhoPrivado{
   position: absolute;
-  left:250px; top:0; right:0; bottom:0;
+  left:260px; top:0; right:0; bottom:0;
 }
 .md-dense {
   background-color: #1E88E5 !important;
@@ -125,7 +120,7 @@ export default {
 /* Menu das páginas privadas*/
 .parentx-static{
   overflow: hidden;
-  position: relative;
+  position: fixed;
 }
 .header-sidebar{
   display: flex;
