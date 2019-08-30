@@ -22,8 +22,11 @@ export default {
       if(erro.response 
           && erro.response.data 
           && erro.response.data.message
+          && erro.response.status
           && erro.response.status == 400){
         this.lista_mensagens = [{tipo: ERRO, texto: erro.response.data.message}]
+      }else if(erro.response && erro.response.status && erro.response.status == 404){
+        this.lista_mensagens = [{tipo: ERRO, texto: "Serviço indisponível"}]
       }else if(erro.message){
         this.lista_mensagens = [{tipo: ERRO, texto: erro.message}]
       }else{

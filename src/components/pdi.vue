@@ -2,7 +2,7 @@
   <div id="app">
     <md-toolbar class="md-dense">
       <h3 class="md-title page-title">
-        PDI
+       Registrar PDI
       </h3>
     </md-toolbar>
     <div class="container">
@@ -32,6 +32,7 @@
                 <label>Descrição do Item</label>
                 <md-input type="text" v-model="item_adicionado.descricao" required/>
               </md-field>
+              
               <div style="display:flex">
                 <md-datepicker v-model="item_adicionado.dataPrevista" md-immediately>
                   <label>Data Prevista *</label>
@@ -40,6 +41,9 @@
                   <label>Data de Realização</label>
                 </md-datepicker>
               </div>
+
+              <md-chips class="md-primary" v-model="item_adicionado.tags" md-placeholder="Adicione tags..."></md-chips>
+
               <div class="right">
                 <md-button class="md-icon-button md-raised md-primary" @click="adicionarItem()">
                   <i class="material-icons">add</i>
@@ -133,7 +137,7 @@ export default{
         pessoa: {
           id: 0
         },
-        itens: []
+        itens: [],
       },
       lista_pdi: [],
       pessoa_selecionada: '',
@@ -142,7 +146,8 @@ export default{
         id: 0,
         descricao: '',
         dataPrevista: null,
-        dataRealizacao:null
+        dataRealizacao:null,
+        tags: []
       }
     }
   },
@@ -166,7 +171,6 @@ export default{
     listar(){
         PDI.listar()
         .then(resposta => {
-          console.log(resposta.data)
           this.lista_pdi = resposta.data
         }).catch(erro => {
           this.$refs.msg.addErro(erro)

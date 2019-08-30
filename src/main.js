@@ -27,11 +27,19 @@ Vue.filter('formatDate', function(value) {
     return moment(String(value)).format('DD/MM/YYYY')
   }
 })
-
 Vue.material.locale.dateFormat = 'dd/MM/yyyy'
 
+import InputMask from 'vue-input-mask';
+Vue.component('input-mask', InputMask)
+
 Vue.config.productionTip = false
+
+import Vuex from 'vuex'
+Vue.use(Vuex)
+import store from '@/store/index.js'
+
 new Vue({
+  store,
   router: router, 
   render: h => h(App)
 }).$mount('#app')

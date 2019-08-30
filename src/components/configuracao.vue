@@ -11,7 +11,7 @@
       <form>
           <md-field>
             <label>Descrição</label>
-            <md-input type="text" v-model="configuracaoPdi.descricao" required/>
+            <md-input type="text" v-model="configuracao.descricao" required/>
           </md-field>
 
           <md-autocomplete v-model="setor_selecionado" :md-options="autocomplete_setor">
@@ -26,10 +26,10 @@
           
           <md-field>
             <label>Periodicidade (em meses)</label>
-            <md-input type="number" v-model="configuracaoPdi.periodicidadeEmMeses" required/>
+            <md-input type="number" v-model="configuracao.periodicidadeEmMeses" required/>
           </md-field>
 
-          <md-switch v-model="configuracaoPdi.ativo">{{ configuracaoPdi.ativo ? 'Ativo' : 'Inativo' }}</md-switch>
+          <md-switch v-model="configuracao.ativo">{{ configuracao.ativo ? 'Ativo' : 'Inativo' }}</md-switch>
 
           <div class="right">
             <md-button class="md-raised md-primary" @click="salvar()">
@@ -42,7 +42,7 @@
       <md-table v-model="lista_configuracao">
         <md-table-toolbar>
           <div class="md-toolbar-section-start">
-            <h1 class="md-title">Lista de Cargos</h1>
+            <h1 class="md-title">Lista de Configurações</h1>
           </div>
         </md-table-toolbar>
         
@@ -75,13 +75,13 @@
 
 <script>
 
-import ConfiguracaoPdi from '@/services/configuracaoPdi'
+import Configuracao from '@/services/configuracao'
 import AutocompleteHelper from '@/services/autocompleteHelper'
 
 export default{
   data(){
     return {
-      configuracaoPdi:{
+      configuracao:{
         descricao: '',
         setor: {
           id: 0
@@ -103,21 +103,20 @@ export default{
     /* eslint-disable */
     limpar(){
       this.setor_selecionado = ''
-      this.configuracaoPdi = {}
+      this.configuracao = {}
       this.$refs.msg.limpar()
     },
     listar(){
-        ConfiguracaoPdi.listar()
+        Configuracao.listar()
         .then(resposta => {
-          console.log(resposta.data)
           this.lista_configuracao = resposta.data
         }).catch(erro => {
           this.$refs.msg.addErro(erro)
         })
     },
     salvar(){
-      this.configuracaoPdi.setor.id = this.setor_selecionado.id
-      ConfiguracaoPdi.salvar(this.configuracaoPdi)
+      this.configuracao.setor.id = this.setor_selecionado.id
+      Configuracao.salvar(this.configuracao)
       .then(resposta => {
         this.limpar()
         this.$refs.msg.addSucess('Configuração salva com sucesso!')
@@ -126,13 +125,13 @@ export default{
         this.$refs.msg.addErro(erro)
       })        
     },
-    editar(configuracaoPdi){
-      this.configuracaoPdi = configuracaoPdi
-      this.setor_selecionado = AutocompleteHelper.selecionarSetor(configuracaoPdi.setor)
+    editar(configuracao){
+      this.configuracao = configuracao
+      this.setor_selecionado = AutocompleteHelper.selecionarSetor(configuracao.setor)
     },
-    remover(configuracaoPdi){
-      if(confirm('Deseja excluir o configuracaoPdi?')){
-        ConfiguracaoPdi.remover(configuracaoPdi).then(resposta => {
+    remover(configuracao){
+      if(confirm('Deseja excluir o configuracao?')){
+        Configuracao.remover(configuracao).then(resposta => {
           this.$refs.msg.addSucess('Configuração removida com sucesso!')
           this.listar()
          }).catch(erro => {

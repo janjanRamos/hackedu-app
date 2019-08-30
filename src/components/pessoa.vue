@@ -14,6 +14,11 @@
             <md-input type="text" v-model="pessoa.nome" required/>
           </md-field>
           
+          <md-field>
+            <label>CPF</label>
+            <md-input type="text" v-model="pessoa.cpf" required/>
+          </md-field>
+
           <md-autocomplete v-model="setor_selecionado" :md-options="autocomplete_setor" >
             <label>Setor *</label>
             <template slot="md-autocomplete-item" slot-scope="{ item }">
@@ -33,9 +38,12 @@
               <i> Nenhum resultado encontrado</i> 
             </template>
           </md-autocomplete>
-
-          <md-switch v-model="pessoa.gestor">{{ pessoa.gestor ? 'Sim' : 'Não' }}</md-switch>
-
+          
+          <div>
+            <label class="label-radio">Gestor?</label>
+            <md-switch v-model="pessoa.gestor">{{ pessoa.gestor ? 'Sim' : 'Não' }}</md-switch>
+          </div>
+          
           <div class="right">
             <md-button class="md-raised md-primary" @click="salvar()">
                 <i class="material-icons">save</i>&nbsp;
@@ -93,7 +101,8 @@ export default{
         cargo: {
           id: 0
         },
-        gestor: false
+        gestor: false,
+        cpf: 0
       },
       lista_pessoas: [],
       setor_selecionado: '',
@@ -158,5 +167,10 @@ export default{
 <style>
 md-autocomplete {
   z-index: 10000;
+}
+.label-radio{
+  font-size:12pt;
+  color:gray; 
+  margin-right:10px;
 }
 </style>
