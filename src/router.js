@@ -10,19 +10,20 @@ import Login from '@/views/public/login.vue'
 import Autocadastro from '@/views/public/autocadastro.vue'
 import Senha from '@/views/public/senha.vue'
 import store from '@/store.js'
+import Inicio from '@/views/public/inicio.vue'
 
 const router = new VueRouter({
   routes: [
     {
       path: '*',
-      redirect: '/login',
-      component: Login,
+      redirect: '/inicio',
+      component: Inicio,
       meta: {public:true}
     },
     {
       path: '/',
-      redirect: '/login',
-      component: Login,
+      redirect: '/inicio',
+      component: Inicio,
       meta: {public:true}
     },
     {
@@ -67,6 +68,11 @@ const router = new VueRouter({
       path: '/senha',
       component: Senha,
       meta: {public:true}
+    },
+    {
+      path: '/inicio',
+      component: Inicio,
+      meta: {public:true}
     }
   ]
 })
@@ -84,7 +90,7 @@ router.beforeEach((to, from, next) => {
   }
 
   //senão retorna para a página de login
-  return next('/login');
+  return next('/inicio');
 })
 
 export default router;

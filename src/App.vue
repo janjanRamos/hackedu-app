@@ -1,19 +1,55 @@
 <template>
   <div>
     <div v-if="!autenticado">
-      <header class="cabecalhoPublic vs-navbar vs-navbar-null vs-navbar-color-transparent" 
+
+      <header>
+          <div>
+            <vs-navbar v-model="activeItem" class="nabarx">
+              <div slot="title">
+                <vs-navbar-title>
+                  Edu2GO
+                </vs-navbar-title>
+              </div>
+              <vs-navbar-item index="1">
+                <a href="#">CURSOS</a>
+              </vs-navbar-item>
+              <vs-navbar-item index="2">
+                <a href="/login">LOGIN</a>
+              </vs-navbar-item>
+              <vs-input icon="search" placeholder="Buscar Cursos" v-model="search"/>
+            </vs-navbar>
+          </div> 
+
+      </header>
+
+      <!-- <header class="cabecalhoPublic vs-navbar vs-navbar-null vs-navbar-color-transparent" 
         style="background-color: transparent; background-position: initial initial; background-repeat: initial initial;">
+     
+      <vs-navbar-title>
+        Edu2GO
+      </vs-navbar-title>
+
+      <vs-navbar-item index="0">
+        <a href="#">Home</a>
+      </vs-navbar-item>
+      <vs-navbar-item index="1">
+        <a href="#">News</a>
+      </vs-navbar-item>
+      <vs-navbar-item index="2">
+        <a href="#">Update</a>
+      </vs-navbar-item>
+
         <div class="vs-navbar--header vs-navbar--title">
           EVOLUA
           <img src="./assets/logo.png"/>
         </div>
-      </header>
+      </header> -->
     </div>
     
     <div class="parentx-static" id="divSidebar" v-if="autenticado">
       <vs-sidebar static-position hidden-background parent="divSidebar" default-index="1" color="primary" class="sidebarx" spacer v-model="active">
         <div class="logo" slot="header">
-          <label>EVOLUA</label>
+          <label>Edu2GO</label>
           <img src="./assets/logo_azul.png" />
         </div>
         

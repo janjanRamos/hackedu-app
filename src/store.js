@@ -21,7 +21,7 @@ const store = new Vuex.Store({
     actions: {
       logout({commit}) {
         commit('logout');
-        router.push('login');
+        //router.push('login');
       }
     }
 })
